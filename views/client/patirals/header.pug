@@ -1,1 +1,14 @@
-header Header
+header.header.bg-white.shadow-sm.py-2
+  .container
+    .row.align-items-center.justify-content-between
+      .col-3.col-md-2
+        .inner-logo
+          a.logo-link.d-block(href="/")
+            img.logo-img.img-fluid(src="img/ST.png" alt="Logo" style="max-height: 50px;")
+      .col-9.col-md-10
+        nav.inner-menu
+          ul.nav-list.list-unstyled.mb-0.d-flex.justify-content-end
+            li.nav-item.me-3
+              a.nav-link.text-decoration-none.text-dark.fw-medium(href="/") Trang chủ
+            li.nav-item
+              a.nav-link.text-decoration-none.text-dark.fw-medium(href="/categories") Danh mục

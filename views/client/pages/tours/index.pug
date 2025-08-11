@@ -1,8 +1,19 @@
 extends ../../layout/default.pug
 include ../../mixins/box-header.pug
+
 block main
-  h1
-    +box-head(pageTitle)
-  ul
-    each tour in tours
-      li= tour.title
+  .container.py-4
+    .row
+      .col-12
+        h1.mb-4
+          +box-head(pageTitle)
+        
+        .row
+          each tour in tours
+            .col-12.col-md-6.col-lg-4.mb-4
+              .card.h-100.shadow-sm
+                .card-body.d-flex.flex-column
+                  h5.card-title.mb-3= tour.title
+                  p.card-text.flex-grow-1.text-muted Tour description here...
+                  .mt-auto
+                    a.btn.btn-primary.w-100(href=`/tours/${tour.slug || tour.id}`) Xem chi tiết
