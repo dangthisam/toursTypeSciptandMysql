@@ -11,9 +11,56 @@ block main
         .row
           each tour in tours
             .col-12.col-md-6.col-lg-4.mb-4
-              .card.h-100.shadow-sm
+              .card.h-100.shadow-sm.overflow-hidden
+                .card-img-top.position-relative
+                  img.w-100(src=tour.image || '/img/default-tour.jpg', alt=tour.title, style="height: 250px; object-fit: cover;")
+                  
+                  // Badge vị trí
+                  .position-absolute.top-0.end-0.m-2
+                    span.badge.bg-success.fs-6= `#${tour.position}`
+                  
+                  // Badge giảm giá (nếu có)
+                  if tour.discount > 0
+                    .position-absolute.top-0.start-0.m-2
+                      span.badge.bg-danger.fs-6= `-${tour.discount}%`
+                  
+                  // Badge trạng thái
+                  .position-absolute.bottom-0.start-0.m-2
+                    span.badge(class=tour.status === 'active' ? 'bg-success' : 'bg-secondary')= tour.status
+                  
+                  // Số lượng chỗ còn lại
+                  .position-absolute.bottom-0.end-0.m-2
+                    span.badge.bg-warning.text-dark= `${tour.stock} chỗ`
+
                 .card-body.d-flex.flex-column
-                  h5.card-title.mb-3= tour.title
-                  p.card-text.flex-grow-1.text-muted Tour description here...
+                  // Tiêu đề và mã tour
+                  .d-flex.justify-content-between.align-items-start.mb-2
+                    h5.card-title.fw-bold.mb-0= tour.title
+                    small.text-muted.fw-bold= tour.code
+                  
+                  // Thông tin thời gian
+                  .mb-3
+                    .d-flex.align-items-center.mb-1
+                      i.fas.fa-calendar-alt.text-primary.me-2
+                      small.text-muted Lịch trình: #{tour.schedules}
+                    .d-flex.align-items-center.mb-1
+                      i.fas.fa-clock.text-primary.me-2
+                      small.text-muted Khởi hành: #{new Date(tour.timeStart).toLocaleDateString('vi-VN')}
+                  
+                  // Mô tả tour
+                  p.card-text.flex-grow-1.text-muted.small= tour.information
+                  
+                  // Giá tour
+                  .mb-3
+                    if tour.discount > 0
+                      .d-flex.align-items-center
+                        span.text-decoration-line-through.text-muted.me-2= `${tour.price_special.toLocaleString('vi-VN')}đ`
+                        span.fw-bold.text-danger.fs-5= `${(tour.price_special * (100 - tour.discount) / 100).toLocaleString('vi-VN')}đ`
+                    else
+                      span.fw-bold.text-primary.fs-5= `${tour.price_special.toLocaleString('vi-VN')}đ`
+                  
+                  // Button xem chi tiết
                   .mt-auto
-                    a.btn.btn-primary.w-100(href=`/tours/${tour.slug || tour.id}`) Xem chi tiết
+                    a.btn.btn-primary.w-100(href=`/tours/detail/${tour.slug || tour.id}`)
+                      i.fas.fa-eye.me-2
+                      | Xem chi tiết
