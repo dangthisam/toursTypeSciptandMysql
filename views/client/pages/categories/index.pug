@@ -1,0 +1,25 @@
+extends ../../layout/default.pug
+include ../../mixins/box-header.pug
+
+block main
+  .container.py-4
+    .row
+      .col-12
+        h1.mb-4
+          +box-head(pageTitle)
+        
+        .row
+          each category in categories
+            .col-12.col-md-6.col-lg-4.mb-4
+              .card.h-100.shadow-sm.overflow-hidden
+                .card-img-top.position-relative
+                  img.w-100(src=category.image || '/img/default-category.jpg', alt=category.title, style="height: 200px; object-fit: cover;")
+                  .position-absolute.top-0.end-0.m-2
+                    span.badge.bg-primary=category.position
+                .card-body.d-flex.flex-column
+                  h5.card-title.mb-3.fw-bold= category.title
+                  p.card-text.flex-grow-1.text-muted= category.description
+                  .mt-auto
+                    a.btn.btn-primary.w-100.btn-hover(href=`/categories/${category.slug || category.id}`) 
+                      i.fas.fa-eye.me-2
+                      | Xem chi tiết
