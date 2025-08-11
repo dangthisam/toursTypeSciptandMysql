@@ -1,4 +1,8 @@
-h1 Tour List
-ul
-  each tour in tours
-    li= tour.title
+extends ../../layout/default.pug
+include ../../mixins/box-header.pug
+block main
+  h1
+    +box-head(pageTitle)
+  ul
+    each tour in tours
+      li= tour.title

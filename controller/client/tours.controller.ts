@@ -10,6 +10,9 @@ export const getAllTours = async (req: Request, res: Response): Promise<void> =>
     raw: true,
   });
 
-  res.render("client/pages/tours/index.pug", { tours });
+  res.render("client/pages/tours/index.pug", { 
+    tours: tours,
+    pageTitle:"Danh sách tour"
+   });
 };
 
