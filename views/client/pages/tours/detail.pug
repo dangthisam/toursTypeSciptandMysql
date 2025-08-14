@@ -49,7 +49,7 @@ block main
                 .inner-percent.badge.bg-danger.fs-6
                   | Giảm tới #{tour.discount || 0}%
 
-              form.form-add-to-cart(action='', method='post' tour-id=':tourId')
+              form.form-add-to-cart( tour-id=tour.id)
                 .mb-3
                   label.form-label.fw-semibold(for='quantity') Số lượng:
                   input#quantity.form-control.form-control-lg(

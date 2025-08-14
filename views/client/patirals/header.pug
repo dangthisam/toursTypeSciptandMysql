@@ -14,9 +14,9 @@ header.header.bg-white.shadow-sm.py-2
               a.nav-link.text-decoration-none.text-dark.fw-medium(href="/categories") Danh mục
             li.nav-item.position-relative
               a.nav-link.text-decoration-none.text-dark.fw-medium(href="/cart")
-                i.fa-solid.fa-cart-shopping.fa-lg
-                // Số lượng sp trong giỏ hàng (ví dụ 3)
-                if cartQuantity && cartQuantity > 0
-                  span.position-absolute.top-0.start-100.translate-middle.badge.rounded-pill.bg-danger.text-white #{cartQuantity}
-                else
-                  // Nếu không có sp thì ẩn hoặc không hiển thị
+                | Giỏ hàng (
+                span(mini-cart-quantity)
+                | )
+                i.fa-solid.fa-cart-shopping.fa-lg.ms-2
+              if cartQuantity && cartQuantity > 0
+                span.position-absolute.top-0.start-100.translate-middle.badge.rounded-pill.bg-danger.text-white #{cartQuantity}
