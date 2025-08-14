@@ -1,0 +1,81 @@
+extends ../../layout/default.pug
+include ../../mixins/box-header.pug
+
+block main
+  .tour-detail
+    .container.my-4
+      .row.mb-4
+        .col-md-6
+          if tour.image
+            .swiper.mySwiper2
+              .swiper-wrapper
+                each item in tour.image
+                  .swiper-slide
+                    img.img-fluid(src=item, alt=tour.title, style="height: 400px; object-fit: cover;")
+              .swiper-button-next
+              .swiper-button-prev
+            .swiper.mySwiper
+              .swiper-wrapper
+                each item in tour.image
+                  .swiper-slide
+                    img.img-fluid(src=item, alt=tour.title, style="height: 400px; object-fit: cover;")
+
+        .col-md-6
+          .card.border-0.shadow-sm.h-100
+            .card-body.p-4
+              .inner-title.h2.fw-bold.text-primary.mb-3 #{tour.title || 'Tour Hạ Long'}
+
+              .inner-barcode.d-flex.align-items-center.mb-2.text-muted
+                i.fa-solid.fa-barcode.me-2
+                span Mã tour:
+                strong.ms-1.text-dark #{tour.code}
+
+              .inner-time-start.d-flex.align-items-center.mb-2.text-muted
+                i.fa-solid.fa-calendar-days.me-2
+                span Lịch khởi hành:
+                strong.ms-1.text-dark
+                  | #{tour.timeStart ? new Date(tour.timeStart).toLocaleString('vi-VN', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' }) : 'Đang cập nhật'}
+
+              .inner-stock.d-flex.align-items-center.mb-3
+                i.fa-solid.fa-person-walking-luggage.me-2.text-warning
+                span Còn lại:
+                span.badge.bg-warning.text-dark.ms-1 #{tour.stock}
+
+              .price-section.mb-4.p-3.rounded
+                .inner-price-special.h3.fw-bold.text-danger.mb-1
+                  | #{tour.price_special ? tour.price_special.toLocaleString('vi-VN') : '0'}đ
+                .inner-price.text-decoration-line-through.text-muted.mb-2
+                  | #{tour.price ? tour.price.toLocaleString('vi-VN') : '0'}đ
+                .inner-percent.badge.bg-danger.fs-6
+                  | Giảm tới #{tour.discount || 0}%
+
+              form.form-add-to-cart(action='', method='post' tour-id=':tourId')
+                .mb-3
+                  label.form-label.fw-semibold(for='quantity') Số lượng:
+                  input#quantity.form-control.form-control-lg(
+                    type="number",
+                    name="quantity",
+                    value="1",
+                    min="1",
+                    max=tour.stock || 1
+                  )
+                button.btn.btn-success.btn-lg.w-100.fw-bold(type="submit")
+                  i.fa-solid.fa-cart-plus.me-2
+                  | Thêm vào giỏ hàng
+
+      .row
+        .col-12.mb-4
+          .inner-infomation.card.shadow-sm
+            .inner-label.card-header.bg-primary.text-white.h5.mb-0.fw-bold.d-flex.align-items-center
+              i.fa-solid.fa-info-circle.me-2
+              | Thông tin tour
+            .inner-text.card-body.lh-lg
+              | #{tour.information || 'Thông tin chi tiết về tour này sẽ được cập nhật sau.'}
+
+        .col-12
+          .inner-infomation.card.shadow-sm
+            .inner-label.card-header.bg-success.text-white.h5.mb-0.fw-bold.d-flex.align-items-center
+              i.fa-solid.fa-route.me-2
+              | Lịch trình tour
+            .inner-text.card-body.lh-lg
+              | #{tour.schedule || 'Lịch trình chi tiết về tour này sẽ được cập nhật sau.'}
