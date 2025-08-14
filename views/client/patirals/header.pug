@@ -14,9 +14,9 @@ header.header.bg-white.shadow-sm.py-2
               a.nav-link.text-decoration-none.text-dark.fw-medium(href="/categories") Danh mục
             li.nav-item.position-relative
               a.nav-link.text-decoration-none.text-dark.fw-medium(href="/cart")
-                | Giỏ hàng (
-                span(mini-cart-quantity)
-                | )
+                
+                span.badge-cart(mini-cart-quantity)
+              
                 i.fa-solid.fa-cart-shopping.fa-lg.ms-2
               if cartQuantity && cartQuantity > 0
                 span.position-absolute.top-0.start-100.translate-middle.badge.rounded-pill.bg-danger.text-white #{cartQuantity}

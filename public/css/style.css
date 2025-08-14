@@ -519,3 +519,23 @@
 @keyframes progressBar {
   to { transform: scaleX(1); }
 }
+.nav-item.position-relative {
+  position: relative; /* để badge có vị trí tuyệt đối cảnh vùng cha */
+}
+
+.badge-cart {
+  position: absolute;
+  top: -6px;
+  right: -10px;
+  background-color: #dc3545; /* đỏ bootstrap */
+  color: white;
+  font-size: 2px;
+  font-weight: 700;
+  padding: 2px 2px;
+  border-radius: 50%;
+  line-height: 1;
+  min-width: 20px;
+  text-align: center;
+  pointer-events: none; /* để không cản click */
+  user-select: none;
+}
