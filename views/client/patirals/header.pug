@@ -7,8 +7,16 @@ header.header.bg-white.shadow-sm.py-2
             img.logo-img.img-fluid(src="img/ST.png" alt="Logo" style="max-height: 50px;")
       .col-9.col-md-10
         nav.inner-menu
-          ul.nav-list.list-unstyled.mb-0.d-flex.justify-content-end
+          ul.nav-list.list-unstyled.mb-0.d-flex.justify-content-end.align-items-center
             li.nav-item.me-3
               a.nav-link.text-decoration-none.text-dark.fw-medium(href="/") Trang chủ
-            li.nav-item
+            li.nav-item.me-3
               a.nav-link.text-decoration-none.text-dark.fw-medium(href="/categories") Danh mục
+            li.nav-item.position-relative
+              a.nav-link.text-decoration-none.text-dark.fw-medium(href="/cart")
+                i.fa-solid.fa-cart-shopping.fa-lg
+                // Số lượng sp trong giỏ hàng (ví dụ 3)
+                if cartQuantity && cartQuantity > 0
+                  span.position-absolute.top-0.start-100.translate-middle.badge.rounded-pill.bg-danger.text-white #{cartQuantity}
+                else
+                  // Nếu không có sp thì ẩn hoặc không hiển thị
