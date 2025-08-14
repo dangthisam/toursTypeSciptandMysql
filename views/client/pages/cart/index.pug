@@ -1,0 +1,132 @@
+extends ../../layout/default.pug
+include ../../mixins/box-header.pug
+
+block main
+  .cart-page.bg-light
+    .container.my-4
+      .row
+        .col-12
+          +box-head(pageTitle)
+      
+      .row
+        .col-12
+          .card.shadow-sm.mb-4
+            .card-header.bg-primary.text-white.fw-bold.d-flex.align-items-center
+              i.fa-solid.fa-shopping-cart.me-2
+              | Giỏ hàng của bạn
+            
+            .card-body.p-0
+              .table-responsive
+                table.table.table-hover.mb-0
+                  thead.table-dark
+                    tr
+                      th.text-center STT
+                      th.text-center Ảnh
+                      th Tiêu đề
+                      th.text-center Giá
+                      th.text-center Số lượng
+                      th.text-center Tổng tiền
+                      th.text-center Hành động
+                  tbody
+                    tr.cart-item
+                      td.text-center.align-middle
+                        span.badge.bg-secondary 1
+                      td.text-center.align-middle
+                        .product-image
+                          img.img-fluid.rounded.shadow-sm(
+                            src="https://backend.daca.vn/assets/tour/images/tour-ha-long.jpg",
+                            alt="Tour Hạ Long",
+                            width="80px",
+                            height="60px",
+                            style="object-fit: cover;"
+                          )
+                      td.align-middle
+                        a.product-link.text-decoration-none.fw-medium(href="/tours/detail/:slugTour") 
+                          | Tour Hạ Long
+                        .small.text-muted.mt-1 Mã tour: TOUR001
+                      td.text-center.align-middle
+                        .price-display.fw-bold.text-primary 1,200,000đ
+                      td.text-center.align-middle
+                        .quantity-controls.d-flex.justify-content-center.align-items-center
+                          button.btn.btn-outline-secondary.btn-sm.quantity-btn(type="button" data-action="decrease")
+                            i.fa-solid.fa-minus
+                          input.form-control.form-control-sm.quantity-input.text-center.mx-1(
+                            type="number",
+                            name="quantity",
+                            value="1",
+                            min="1",
+                            item-id=":tourId",
+                            style="width: 70px"
+                          )
+                          button.btn.btn-outline-secondary.btn-sm.quantity-btn(type="button" data-action="increase")
+                            i.fa-solid.fa-plus
+                      td.text-center.align-middle
+                        .total-price.fw-bold.text-success.h6 1,200,000đ
+                      td.text-center.align-middle
+                        button.btn.btn-outline-danger.btn-sm.delete-btn(
+                          btn-delete=":tourId",
+                          title="Xóa sản phẩm"
+                        )
+                          i.fa-solid.fa-trash.me-1
+                          span.d-none.d-md-inline Xóa
+          
+          .card.shadow-sm.mb-4
+            .card-body.text-end.bg-light
+              h5.mb-0.d-flex.justify-content-between.align-items-center
+                span.text-muted Tổng đơn hàng:
+                span.total-amount.text-danger.fw-bold.fs-4(total-price) 1,200,000đ
+
+      .row
+        .col-12
+          .card.shadow-sm
+            .card-header.bg-success.text-white.fw-bold.d-flex.align-items-center
+              i.fa-solid.fa-user.me-2
+              | Thông tin khách hàng
+            
+            .card-body
+              form.customer-form(form-order)
+                .row
+                  .col-md-6
+                    .form-group.mb-3
+                      label.form-label.fw-semibold(for="fullName") 
+                        i.fa-solid.fa-user.me-1
+                        | Họ tên
+                        span.text-danger *
+                      input.form-control.form-control-lg(
+                        type="text",
+                        id="fullName",
+                        name="fullName",
+                        placeholder="Nhập họ và tên",
+                        required
+                      )
+                  
+                  .col-md-6
+                    .form-group.mb-3
+                      label.form-label.fw-semibold(for="phone") 
+                        i.fa-solid.fa-phone.me-1
+                        | Số điện thoại
+                        span.text-danger *
+                      input.form-control.form-control-lg(
+                        type="tel",
+                        id="phone",
+                        name="phone",
+                        placeholder="Nhập số điện thoại",
+                        required
+                      )
+                
+                .form-group.mb-4
+                  label.form-label.fw-semibold(for="note") 
+                    i.fa-solid.fa-sticky-note.me-1
+                    | Ghi chú
+                  textarea.form-control(
+                    id="note",
+                    name="note",
+                    rows="3",
+                    placeholder="Nhập ghi chú (tùy chọn)"
+                  )
+                
+                .text-center
+                  button.btn.btn-success.btn-lg.px-5.fw-bold.order-btn(type="submit")
+                    i.fa-solid.fa-credit-card.me-2
+                    | ĐẶT TOUR NGAY
+

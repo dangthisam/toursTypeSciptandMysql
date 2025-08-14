@@ -14,16 +14,14 @@
         swiper: swiper,
       },
     });
-const showminiCart = () => {
 
-  
+    // Hiển thị số lượng sản phẩm trong giỏ hàng
+const showminiCart = () => {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     const totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
     console.log(totalQuantity);
     const minicart = document.querySelector("[mini-cart-quantity]");
     minicart.innerHTML = totalQuantity;
-
-
 };
 
 showminiCart();
