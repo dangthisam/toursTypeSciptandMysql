@@ -885,3 +885,18 @@
     50% { transform: scale(1.05); }
     100% { transform: scale(1); }
   }
+
+  .btn-remove {
+    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+    border: none;
+    border-radius: 10px;
+    padding: 8px 12px;
+    color: white;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .btn-remove:hover {
+    background: linear-gradient(135deg, #c82333 0%, #dc3545 100%);
+  }

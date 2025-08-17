@@ -1,12 +1,14 @@
 import express , {Express, Request , Response } from "express";
 import path from "path";
+import bodyParser from "body-parser"
 import sequelize from "./config/connectDB";
 import indexRouterClient from "./router/client/index.router"
-const app: Express = express();
 import dotenv from "dotenv";
-
+const app: Express = express();
 dotenv.config();
 const port = process.env.PORT || 3000;
+  app.use(bodyParser.json());
+
 indexRouterClient(app);
 // connect to database
 sequelize.authenticate()
@@ -16,7 +18,10 @@ sequelize.authenticate()
   .catch((err) => {
     console.error("Unable to connect to the database:", err);
   });
+
 app.use(express.static(path.join(__dirname, 'public')));
+
+
 // 7. View engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
