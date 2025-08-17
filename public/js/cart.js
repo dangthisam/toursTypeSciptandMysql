@@ -1,5 +1,11 @@
 
-
+function showminiCart1 () {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
+    console.log(totalQuantity);
+    const minicart = document.querySelector("[mini-cart-quantity]");
+    minicart.innerHTML = totalQuantity;
+};
 function drawTour(){
     fetch("http://localhost:3000/cart/list-json", {
     method: "POST",
@@ -42,6 +48,7 @@ function drawTour(){
               const totalPrice = data.tour.reduce((acc, item) => acc + item.totalPrice, 0);
               totalPriceElement.innerHTML = totalPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
               deleteTour();
+                showminiCart1()
 
     })
 
