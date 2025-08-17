@@ -2,8 +2,10 @@ import express , {Express, Request , Response } from "express";
 import path from "path";
 import bodyParser from "body-parser"
 import sequelize from "./config/connectDB";
-import indexRouterClient from "./router/client/index.router"
+import indexRouterClient from "./router/client/index.router";
+import indexRouterAdmin from "./router/admin/index.router"
 import moment from "moment";
+import systemConfig from "./config/system";
 import dotenv from "dotenv";
 const app: Express = express();
 dotenv.config();
@@ -12,7 +14,10 @@ const port = process.env.PORT || 3000;
 
 
 app.locals.moment=moment
+indexRouterAdmin(app);
+app.locals.prefixAdmin=systemConfig.prefixAdmin;
 indexRouterClient(app);
+
 // connect to database
 sequelize.authenticate()
   .then(() => {
