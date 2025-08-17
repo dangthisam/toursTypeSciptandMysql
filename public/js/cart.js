@@ -92,4 +92,44 @@ function updateQuantityTour(){
         })
     })
 }
+
 drawTour();
+
+// Lấy thông tin đặt tour gửi cho backend
+const formTour=document.querySelector("[form-order]");
+if(formTour){
+    formTour.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const fullName=event.target.elements.fullName.value;
+        const phone=event.target.elements.phone.value;
+        const note=event.target.elements.note.value;
+
+        const cart=JSON.parse(localStorage.getItem("cart"));
+        const data={
+            info:{
+                name:fullName,
+                phone:phone,
+                note:note,
+
+            },
+            cart:cart
+        }
+
+
+        fetch("/order",{
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => {
+            console.error("Error:", error);
+        });
+    });
+}
+
