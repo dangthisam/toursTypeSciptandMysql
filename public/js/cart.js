@@ -48,12 +48,14 @@ function drawTour(){
               const totalPrice = data.tour.reduce((acc, item) => acc + item.totalPrice, 0);
               totalPriceElement.innerHTML = totalPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
               deleteTour();
+                updateQuantityTour();
                 showminiCart1()
 
     })
 
 }
 
+// hàm xóa tour trong giỏ hàng
 function deleteTour(){
     const buttonDelete=document.querySelectorAll("[btn-delete]");
     buttonDelete.forEach(button => {
@@ -71,4 +73,23 @@ function deleteTour(){
     });
 }
 
+
+// hàm cập nhật số tour trong giỏ hàng
+
+function updateQuantityTour(){
+    const inputQuantity=document.querySelectorAll("[tour-list]  input[item-id]");
+    inputQuantity.forEach(input =>{
+        input.addEventListener("change", () =>{
+            const tourId = input.getAttribute('item-id');
+            const newQuantity = parseInt(input.value);
+            const cart = JSON.parse(localStorage.getItem('cart'));
+            const cartID = cart.find(item => item.tourId == tourId);
+            if(cartID) {
+                cartID.quantity = newQuantity;
+            }
+            localStorage.setItem('cart', JSON.stringify(cart));
+            drawTour();
+        })
+    })
+}
 drawTour();
