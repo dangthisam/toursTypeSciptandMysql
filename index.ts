@@ -3,12 +3,15 @@ import path from "path";
 import bodyParser from "body-parser"
 import sequelize from "./config/connectDB";
 import indexRouterClient from "./router/client/index.router"
+import moment from "moment";
 import dotenv from "dotenv";
 const app: Express = express();
 dotenv.config();
 const port = process.env.PORT || 3000;
   app.use(bodyParser.json());
 
+
+app.locals.moment=moment
 indexRouterClient(app);
 // connect to database
 sequelize.authenticate()

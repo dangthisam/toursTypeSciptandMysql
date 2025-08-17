@@ -1,0 +1,57 @@
+extends ../../layout/default.pug
+include ../../mixins/box-header.pug
+include ../../mixins/moment.pug
+block main
+  .container.my-5
+    .row.mb-4
+      .col-12
+        div.alert.alert-success.text-center.fs-5.fw-semibold.shadow-sm
+          | Chúc mừng bạn đã đặt hàng thành công! Mã đơn hàng của bạn là 
+          b.text-primary #{order.code}
+
+    .row.mb-5
+      .col-12
+        +box-head("Thông tin khách hàng")
+
+        table.table.table-striped.table-bordered.align-middle.mt-3
+          tbody
+            tr
+              th.w-25.text-end.pe-3 Họ tên
+              td.fs-5.fw-medium.text-dark.ps-3.text-capitalize #{order.fullName}
+            tr
+              th.text-end.pe-3 Số điện thoại
+              td.fs-5.text-dark.ps-3 #{order.phone}
+            tr
+              th.text-end.pe-3 Ghi chú
+              td.fs-5.text-dark.ps-3 | #{order.note}
+            tr
+              th.text-end.pe-3 Ngày đặt
+              td.fs-5.text-dark.ps-3
+                +formatDateTime(order.createdAt)
+    .row
+      .col-12
+        +box-head("Danh sách tour")
+
+        table.table.table-hover.table-bordered.mt-3
+          thead.table-light
+            tr
+              th.text-center STT
+              th.text-center Ảnh
+              th Tiêu đề
+              th.text-end Giá
+              th.text-center Số lượng
+              th.text-end Tổng tiền
+          tbody
+           each tour, index in dataTour 
+            tr 
+              td.text-center.fs-6.fw-semibold #{index + 1}
+              td.text-center
+                img.img-thumbnail(src=tour.image ,alt="Tour Hạ Long" width="80px")
+              td.fs-5
+                a.text-decoration-none.text-primary(href=`/tours/detail/${tour.slug}`) #{tour.title}
+              td.text-end.text-danger.fs-6.fw-bold #{tour.specialPrice.toLocaleString()}đ
+              td.text-center.fs-6 #{tour.quantity}
+              td.text-end.fs-6.fw-semibold #{tour.totalPrice.toLocaleString()}d
+
+
+        h5.text-end.mt-4.text-success.fw-bold.fs-5 Tổng đơn hàng: #{order.total_price.toLocaleString()}đ
