@@ -125,7 +125,13 @@ if(formTour){
         })
         .then(response => response.json())
         .then(data => {
-            console.log(data);
+            if(data.code==200){
+                alert("Đặt tour thành công");
+                localStorage.removeItem("cart");
+                window.location.href = `/order/success?orderCode=${data.orderCode}`;
+            }else{
+                alert("Đặt tour thất bại, vui lòng thử lại sau");
+            }
         })
         .catch(error => {
             console.error("Error:", error);
