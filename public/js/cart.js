@@ -1,4 +1,7 @@
-fetch("http://localhost:3000/cart/list-json", {
+
+
+function drawTour(){
+    fetch("http://localhost:3000/cart/list-json", {
     method: "POST",
     headers: {
         "Content-Type": "application/json"
@@ -38,8 +41,27 @@ fetch("http://localhost:3000/cart/list-json", {
               const totalPriceElement = document.querySelector("[total-price]");
               const totalPrice = data.tour.reduce((acc, item) => acc + item.totalPrice, 0);
               totalPriceElement.innerHTML = totalPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
-
-              const btnDelete=document.querySelector("[btn-delete]");
-              console.log(btnDelete);
+              deleteTour();
 
     })
+
+}
+
+function deleteTour(){
+    const buttonDelete=document.querySelectorAll("[btn-delete]");
+    buttonDelete.forEach(button => {
+        button.addEventListener("click", (event) => {
+            const tourId = button.getAttribute('btn-delete');
+            console.log(tourId);
+            const cart = JSON.parse(localStorage.getItem('cart'));
+            console.log(cart)
+            const updatedCart = cart.filter(item => item.tourId != tourId);
+            console.log(updatedCart);
+            localStorage.setItem('cart', JSON.stringify(updatedCart));
+           drawTour();
+     
+        });
+    });
+}
+
+drawTour();
