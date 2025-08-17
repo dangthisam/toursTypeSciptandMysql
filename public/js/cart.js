@@ -107,7 +107,7 @@ if(formTour){
         const cart=JSON.parse(localStorage.getItem("cart"));
         const data={
             info:{
-                name:fullName,
+                fullName:fullName,
                 phone:phone,
                 note:note,
 
