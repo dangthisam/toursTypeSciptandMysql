@@ -65,6 +65,7 @@ export const postCreateTour =async (req:Request, res:Response)=>{
         
 
     }
-    console.log(dataTour)
+   await Tour.create(dataTour)
+   res.send("ok")
  
 }

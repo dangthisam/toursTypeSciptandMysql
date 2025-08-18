@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";   
 import sequelize from "../config/connectDB";
 
-
+import slugify from "slugify";
 const Tour = sequelize.define('Tour', {
     id:{
         type: DataTypes.INTEGER,
@@ -64,5 +64,16 @@ const Tour = sequelize.define('Tour', {
     tableName:"tours",
     timestamps:true
 });
+
+Tour.beforeValidate((tour, options) => {
+  if (!tour["slug"] && tour["title"]) {
+    // Dùng setDataValue để đảm bảo luôn set giá trị (nếu dùng typescript thì thêm check null)
+    tour.setDataValue('slug', slugify(`${tour["title"]}-${Date.now()}`, {
+      lower: true,
+      strict: true
+    }));
+  }
+});
+
 
 export default Tour;
