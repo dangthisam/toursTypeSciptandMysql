@@ -11,6 +11,7 @@ const app: Express = express();
 dotenv.config();
 const port = process.env.PORT || 3000;
   app.use(bodyParser.json());
+app.use(bodyParser.urlencoded())
 
 
 app.locals.moment=moment

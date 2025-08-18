@@ -1,0 +1,104 @@
+extends ../../layout/default.pug
+
+block main
+  h1.mb-4 #{titlePage}
+
+  form(action= prefixAdmin + '/tours/create' method="POST")
+    div.form-group
+      label(for="title") Tiêu đề
+      input(
+        type="text"
+        class="form-control"
+        id="title"
+        name="title"
+        required
+      )
+
+    div.form-group
+      label(for="category") Danh mục
+      select(
+        name="category_id"
+        id="category"
+        class="form-control"
+        required
+      )
+        option(value="" disabled selected) -- Chọn danh mục --
+        each item in categories 
+          option(value=item.id) #{item.title}
+
+    div.form-group
+      label(for="price") Giá
+      input(
+        type="number"
+        class="form-control"
+        id="price"
+        name="price"
+        value="0"
+        min="0"
+      )
+
+    div.form-group
+      label(for="discount") % Giảm giá
+      input(
+        type="number"
+        class="form-control"
+        id="discount"
+        name="discount"
+        value="0"
+        min="0"
+      )
+
+    div.form-group
+      label(for="stock") Số lượng
+      input(
+        type="number"
+        class="form-control"
+        id="stock"
+        name="stock"
+        value="0"
+        min="0"
+      )
+
+    div.form-group
+      label(for="timeStart") Lịch khởi hành
+      input(
+        type="datetime-local"
+        class="form-control"
+        id="timeStart"
+        name="timeStart"
+      )
+
+    div.form-group
+      label(for="position") Vị trí
+      input(
+        type="number"
+        class="form-control"
+        id="position"
+        name="position"
+        placeholder="Tự động tăng"
+        min="1"
+      )
+
+    div.form-group.form-check.form-check-inline
+      input(
+        type="radio"
+        class="form-check-input"
+        id="statusActive"
+        name="status"
+        value="active"
+        checked
+      )
+      label.form-check-label(for="statusActive") Hoạt động
+
+    div.form-group.form-check.form-check-inline
+      input(
+        type="radio"
+        class="form-check-input"
+        id="statusInActive"
+        name="status"
+        value="inactive"
+      )
+      label.form-check-label(for="statusInActive") Dừng hoạt động
+
+    div.form-group
+      button(type="submit" class="btn btn-primary") Tạo mới
