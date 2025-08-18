@@ -20,10 +20,15 @@ block main
             th STT
             th Hình ảnh
             th Tiêu đề
+            th Gía
+            th % Giảm giá
+            th Giá đặc biệt
+            th Còn lại 
             th Trạng thái
+            th Vị trí
             th Hành động
         tbody
-          each item, index in categories
+          each item, index in tours
             tr
               td #{index + 1}
               td
@@ -34,17 +39,23 @@ block main
                   height="auto"
                 )
               td #{item.title}
+              td #{item.price.toLocaleString()}
+              td #{item.discount}
+              td #{item.special_Price.toLocaleString()}
+              td #{item.stock}
+              
               td
                 if item.status === "active"
                   a.badge.bg-success.text-white(href="javascript:;") Hoạt động
                 else
                   a.badge.bg-danger.text-white(href="javascript:;") Dừng hoạt động
+              td #{item.position}
               td
                 a.btn.btn-secondary.btn-sm(
-                  href=`${prefixAdmin}/categories/detail/${item.id}`
+                  href=`${prefixAdmin}/tours/detail/${item.id}`
                 ) Chi tiết
                 a.btn.btn-warning.btn-sm.ms-1(
-                  href=`${prefixAdmin}/categories/edit/${item.id}`
+                  href=`${prefixAdmin}/tours/edit/${item.id}`
                 ) Sửa
                 button.btn.btn-danger.btn-sm.ms-1(
                   button-delete 
