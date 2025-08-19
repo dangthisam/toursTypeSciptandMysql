@@ -4,6 +4,7 @@ import Category from "../../model/categories.model";
 import { generateOrderCodeTour } from "../../helps/generate";
 import systemConfig from "../../config/system";
 import TourCategory from "../../model/tour_category.model"
+import { where } from "sequelize";
 export const indexTour =async (req:Request, res:Response) =>{
 
 const tours=await Tour.findAll({
@@ -80,4 +81,20 @@ const tourId=tour["id"];
    await TourCategory.create(dataTourCategory);
  res.redirect(`${systemConfig.prefixAdmin}/tours`)
  
+}
+
+
+export const deletour =async (req:Request,  res:Response) =>{
+    const id=req.params.id;
+    await Tour.update({
+        deleted:true
+    },{
+where:{
+    id:id,
+}
+    })
+    res.json({
+        code:200,
+        message:"delete success"
+    })
 }

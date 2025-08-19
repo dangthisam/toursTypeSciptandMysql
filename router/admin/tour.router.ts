@@ -7,9 +7,11 @@ import {
   indexTour,
   createTour,
   postCreateTour,
+  deletour
 } from "../../controller/admin/tour.controller";
 router.get("/", indexTour);
 router.get("/create", createTour);
+router.delete("/delete/:id" , deletour);
 router.post(
   
   "/create", 
