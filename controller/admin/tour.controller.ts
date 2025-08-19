@@ -2,6 +2,8 @@ import { Request , Response } from "express";
 import Tour from "../../model/tours.model";
 import Category from "../../model/categories.model";
 import { generateOrderCodeTour } from "../../helps/generate";
+import systemConfig from "../../config/system";
+import TourCategory from "../../model/tour_category.model"
 export const indexTour =async (req:Request, res:Response) =>{
 
 const tours=await Tour.findAll({
@@ -52,6 +54,7 @@ export const postCreateTour =async (req:Request, res:Response)=>{
     }
    
     const data=req.body;
+    
     const code =generateOrderCodeTour(countTour+1);
     const dataTour={
         title:req.body.title,
@@ -65,7 +68,15 @@ export const postCreateTour =async (req:Request, res:Response)=>{
         
 
     }
-   await Tour.create(dataTour)
-   res.send("ok")
+
+const tour=   await Tour.create(dataTour)
+const tourId=tour["id"];
+   const dataTourCategory={
+    tour_id:tourId,
+    category_id:req.body.category_id
+   }
+
+   await TourCategory.create(dataTourCategory);
+ res.redirect(`${systemConfig.prefixAdmin}/tours`)
  
 }
