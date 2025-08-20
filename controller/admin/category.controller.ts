@@ -9,9 +9,26 @@ export const indexCategory = async (req:Request , res:Response) =>{
             status:"active"
         }
     })
-    console.log(categories)
+    
     res.render("admin/pages/category/index.pug",{
         titlePage:"Quản lý danh mục",
         categories:categories
+    })
+}
+
+
+export const deleteCategory =async(req:Request, res:Response) =>{
+    const id=req.params.id;
+console.log(id)
+    await Category.update({
+               deleted:true
+    },{
+        where:{
+id:id
+        }
+    })
+    res.json({
+        code:200,
+        message:"Delete success"
     })
 }

@@ -2,7 +2,8 @@ document.querySelectorAll('button[button-delete]').forEach(button => {
   button.addEventListener('click', () => {
     const id = button.getAttribute('data-id');
     if (confirm('Bạn có chắc muốn xóa tour này không?')) {
-      fetch(`/admin/tours/delete/${id}`, { method: 'DELETE',
+      fetch(`/admin/tours/delete/${id}`, { 
+        method: 'DELETE',
         headers: { 'Content-Type': 'application/json' }
        })
         .then(response => {
@@ -21,3 +22,24 @@ document.querySelectorAll('button[button-delete]').forEach(button => {
     }
   });
 });
+
+// call API delete category
+
+const button_delete_category=document.querySelectorAll("button[button-delete-category]");
+if(button_delete_category){
+  button_delete_category.forEach(button=>{
+    button.addEventListener("click", ()=>{
+      const id=button.getAttribute("data-id");
+            if(confirm("Bạn có chắc chắn muốn xóa danh mục này chứ")){
+              fetch(`/admin/category/delete/${id}`,{
+                    method:"DELETE",
+                    headers:{ 'Content-Type': 'application/json' }
+              })
+              .then(data=>{
+                   button.closest('tr').remove();
+                
+              })
+            }
+    })
+  })
+}
