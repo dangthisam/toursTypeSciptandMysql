@@ -55,5 +55,6 @@ export const userLogin =async(req:Request, res:Response)=>{
  }
 
   const token = jwt.sign({ userId: user["username"] }, secretKeyJWT, { expiresIn: '1h' });
+
   res.status(200).send({token})
 }

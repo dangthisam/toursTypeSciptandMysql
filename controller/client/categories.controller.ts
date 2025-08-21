@@ -1,6 +1,7 @@
 
 import { Request , Response  } from "express" 
 import Category from "../../model/categories.model";
+
 const getAllCategories = async (req: Request, res: Response): Promise<void> => {
   try {
     const categories = await Category.findAll({
