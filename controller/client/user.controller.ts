@@ -3,6 +3,7 @@ import md5 from "md5";
 import User from "../../model/user.model";
 import  jwt from "jsonwebtoken"
 const secretKeyJWT =process.env.JWT_SECRET_KEY
+const secretRefreshJWT=process.env.REFRESH_SECRET_KEY
 export const userRegister=async (req:Request, res:Response) =>{
 
     const {email , password, username}=req.body;
@@ -54,7 +55,61 @@ export const userLogin =async(req:Request, res:Response)=>{
     })
  }
 
-  const token = jwt.sign({ userId: user["username"] }, secretKeyJWT, { expiresIn: '1h' });
+  const token = jwt.sign({ userId: user["username"] }, secretKeyJWT, { expiresIn: '2m' });
+  const refreshToken=jwt.sign({userid:user["username"]} , secretRefreshJWT ,{expiresIn:'1d'})
 
-  res.status(200).send({token})
+  res.cookie("jwt" , refreshToken ,{
+    httpOnly:true, //dam bao cookie khong the truy cap bang js tren trinh duyet
+    sameSite:"none",//: cookie chỉ được gửi qua kết nối HTTPS và cho phép gửi trong yêu cầu cross-site (cần thiết khi frontend và backend khác domain).
+    secure:true,
+    maxAge:24*60*60*100
+  })
+  res.status(200).send({token , refreshToken})
 }
+
+export const refreshToken =async(req:Request,res:Response) =>{
+const {email, password} =req.body;
+    const user =await User.findOne({
+        where:{
+            email:email
+        }
+    });
+    if(!user){
+        res.json({
+            code:401,
+            message:"Invalid credentials"
+        })
+    }
+    console.log(user["password"])
+ if(user["password"]!=md5(password)){
+    res.json({
+        code:401,
+        message:"invalid password"
+    })
+ }
+    if(req.cookies.jwt){
+        const refreshToken=req.cookies.jwt;
+        console.log(refreshToken)
+        // Verifying refresh token
+        jwt.verify(refreshToken,secretRefreshJWT,
+            (err:Error, decoded) => {
+                if (err) {
+
+                    // Wrong Refesh Token
+                    return res.status(406).json({ message: 'Unauthorized' });
+                }
+                else {
+                    // Correct token we send a new access token
+                    const accessToken = jwt.sign({
+                        username:user["username"],
+                        email: user["email"]
+                    }, secretKeyJWT, {
+                        expiresIn: '2m'
+                    });
+                    return res.status(201).json(accessToken)
+                }
+            })
+    } else {
+        return res.status(406).json({ message: 'Unauthorized' });
+    }
+    }

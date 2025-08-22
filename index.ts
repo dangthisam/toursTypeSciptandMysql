@@ -5,6 +5,8 @@ import sequelize from "./config/connectDB";
 import indexRouterClient from "./router/client/index.router";
 import indexRouterAdmin from "./router/admin/index.router"
 import moment from "moment";
+import cors from "cors";
+import cookieParser from "cookie-parser"
 import systemConfig from "./config/system";
 import dotenv from "dotenv";
 const app: Express = express();
@@ -15,6 +17,7 @@ app.use(bodyParser.urlencoded())
 
 
 app.locals.moment=moment
+app.use(cookieParser())
 indexRouterAdmin(app);
 app.locals.prefixAdmin=systemConfig.prefixAdmin;
 indexRouterClient(app);
@@ -29,7 +32,7 @@ sequelize.authenticate()
   });
 
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(cors())
 
 // 7. View engine setup
 app.set("views", path.join(__dirname, "views"));
