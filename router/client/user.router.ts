@@ -6,11 +6,13 @@ import {
     userRegister,
     userLogin,
     refreshToken,
-    formRegister
+    formRegister,
+    formLogin
 } from "../../controller/client/user.controller"
 
 router.get("/register", formRegister);
 router.post("/register" , userRegister);
 router.post("/login", userLogin);
+router.get("/login" , formLogin);
 router.post("/refresh", refreshToken);
 export default router;

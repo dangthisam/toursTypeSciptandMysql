@@ -9,7 +9,7 @@ const User =sequelize.define("User" , {
         primaryKey:true
     },
     password:{
-        type:DataTypes.STRING(30),
+        type:DataTypes.STRING(40),
         allowNull:false
     },
    

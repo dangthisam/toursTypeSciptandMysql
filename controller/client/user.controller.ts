@@ -39,8 +39,12 @@ export const formRegister =async (req:Request, res:Response)=>{
         titlePage:"Dang ky tai khoan"
     })
 }
-export const userLogin =async(req:Request, res:Response)=>{
 
+
+// [POST]  /user/login
+
+export const userLogin =async(req:Request, res:Response)=>{
+console.log(req.body)
     const {email, password} =req.body;
     const user =await User.findOne({
         where:{
@@ -48,20 +52,23 @@ export const userLogin =async(req:Request, res:Response)=>{
         }
     });
     if(!user){
-        res.json({
+    return     res.json({
             code:401,
             message:"Invalid credentials"
         })
     }
     console.log(user["password"])
- if(user["password"]!=md5(password)){
-    res.json({
+    console.log(md5(password))
+ if(user["password"]!==md5(req.body.password)){
+    return  res.json({
         code:401,
         message:"invalid password"
     })
+   
  }
 
-  const token = jwt.sign({ userId: user["username"] }, secretKeyJWT, { expiresIn: '2m' });
+  else{
+    const token = jwt.sign({ userId: user["username"] }, secretKeyJWT, { expiresIn: '2m' });
   const refreshToken=jwt.sign({userid:user["username"]} , secretRefreshJWT ,{expiresIn:'1d'})
 
   res.cookie("jwt" , refreshToken ,{
@@ -71,6 +78,7 @@ export const userLogin =async(req:Request, res:Response)=>{
     maxAge:24*60*60*100
   })
   res.status(200).send({token , refreshToken})
+  }
 }
 
 export const refreshToken =async(req:Request,res:Response) =>{
@@ -119,3 +127,11 @@ const {email, password} =req.body;
         return res.status(406).json({ message: 'Unauthorized' });
     }
     }
+
+//[GET]  /user/login
+
+export const formLogin =async(req:Request , res:Response)=>{
+    res.render("client/pages/user/login.pug",{
+        titlePage:"Login"
+    })
+}
