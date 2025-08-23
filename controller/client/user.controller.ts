@@ -70,7 +70,13 @@ console.log(req.body)
   else{
     const token = jwt.sign({ userId: user["username"] }, secretKeyJWT, { expiresIn: '2m' });
   const refreshToken=jwt.sign({userid:user["username"]} , secretRefreshJWT ,{expiresIn:'1d'})
-
+res.cookie("accessToken" , token,{
+    httpOnly:true,
+    sameSite:"none",
+    secure:true,
+    maxAge:2*60*1000
+}
+)
   res.cookie("jwt" , refreshToken ,{
     httpOnly:true, //dam bao cookie khong the truy cap bang js tren trinh duyet
     sameSite:"none",//: cookie chỉ được gửi qua kết nối HTTPS và cho phép gửi trong yêu cầu cross-site (cần thiết khi frontend và backend khác domain).

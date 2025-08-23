@@ -52,4 +52,19 @@ showminiCart();
     });
 
 
+    //
+
+    async function refreshToken (){
+      const response =await ("/user/refresh-token",{
+        method:"POST" ,
+        headers:{
+           'Content-Type': 'application/json'
+        }
+      });
+      if(!response.ok){
+        
+      }
+    }
+
+
 
