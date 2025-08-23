@@ -6,10 +6,10 @@ import orderRouter from "./order.router"
 import userRouter from "./user.router"
 import {authenticateToken} from "../../middleware/client/jwtAuth.middleware"
 const clientRouter = (app: Express): void => {
-  app.use("/tours", authenticateToken,toursRouter);
-  app.use("/categories", authenticateToken,categoriesRouter);
-  app.use("/cart",authenticateToken, cartRouter);
-  app.use("/order", authenticateToken,orderRouter);
+  app.use("/tours",toursRouter);
+  app.use("/categories", categoriesRouter);
+  app.use("/cart", cartRouter);
+  app.use("/order",orderRouter);
   app.use("/user" , userRouter)
 };
 

@@ -12,11 +12,14 @@ header.header.bg-white.shadow-sm.py-2
               a.nav-link.text-decoration-none.text-dark.fw-medium(href="/") Trang chủ
             li.nav-item.me-3
               a.nav-link.text-decoration-none.text-dark.fw-medium(href="/categories") Danh mục
-            li.nav-item.position-relative
+            li.nav-item.position-relative.me-3
               a.nav-link.text-decoration-none.text-dark.fw-medium(href="/cart")
-                
                 span.badge-cart(mini-cart-quantity)
-              
                 i.fa-solid.fa-cart-shopping.fa-lg.ms-2
-              if cartQuantity && cartQuantity > 0
-                span.position-absolute.top-0.start-100.translate-middle.badge.rounded-pill.bg-danger.text-white #{cartQuantity}
+                if cartQuantity && cartQuantity > 0
+                  span.position-absolute.top-0.start-100.translate-middle.badge.rounded-pill.bg-danger.text-white #{cartQuantity}
+            //- Phần đăng ký và đăng nhập
+            li.nav-item.me-3
+              a.nav-link.text-decoration-none.text-dark.fw-medium(href="/user/register") Đăng ký
+            li.nav-item
+              a.nav-link.text-decoration-none.text-dark.fw-medium(href="/user/login") Đăng nhập

@@ -5,13 +5,12 @@ import  jwt from "jsonwebtoken"
 const secretKeyJWT =process.env.JWT_SECRET_KEY
 const secretRefreshJWT=process.env.REFRESH_SECRET_KEY
 export const userRegister=async (req:Request, res:Response) =>{
-
     const {email , password, username}=req.body;
-    const exitsEmail=await User.findAll({
+    const exitsEmail=await User.findOne({
         where:{
             email:email
         }
-    })
+    });
     if(exitsEmail){
         res.json({
             code:400,
@@ -33,6 +32,13 @@ const newUser=    await User.create(dataUser)
     })
 }
 
+
+// Register
+export const formRegister =async (req:Request, res:Response)=>{
+    res.render("client/pages/user/register.pug",{
+        titlePage:"Dang ky tai khoan"
+    })
+}
 export const userLogin =async(req:Request, res:Response)=>{
 
     const {email, password} =req.body;
@@ -104,7 +110,7 @@ const {email, password} =req.body;
                         username:user["username"],
                         email: user["email"]
                     }, secretKeyJWT, {
-                        expiresIn: '2m'
+                        expiresIn: '10m'
                     });
                     return res.status(201).json(accessToken)
                 }

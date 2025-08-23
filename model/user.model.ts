@@ -9,21 +9,22 @@ const User =sequelize.define("User" , {
         primaryKey:true
     },
     password:{
-        type:DataTypes.STRING(50),
+        type:DataTypes.STRING(30),
         allowNull:false
     },
-    username:{
-        type:DataTypes.STRING(50),
-        allowNull:false
-    },
+   
     email:{
-        type:DataTypes.STRING(40),
+        type:DataTypes.STRING(30),
+        allowNull:false
+    },
+     username:{
+        type:DataTypes.STRING(30),
         allowNull:false
     },
 
 },{
     tableName:"user",
-    timestamps:false
+    timestamps:true
 })
 
 export default User;

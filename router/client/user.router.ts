@@ -5,8 +5,11 @@ const router=express.Router();
 import {
     userRegister,
     userLogin,
-    refreshToken
+    refreshToken,
+    formRegister
 } from "../../controller/client/user.controller"
+
+router.get("/register", formRegister);
 router.post("/register" , userRegister);
 router.post("/login", userLogin);
 router.post("/refresh", refreshToken);
